@@ -11,9 +11,14 @@ class ChooseLocation extends StatefulWidget {
 class _ChooseLocationState extends State<ChooseLocation> {
   void getData() async {
     Response response = await get(Uri.https('jsonplaceholder.typicode.com', 'todos/1'));
-    print(response.body);
-    Map parsed = jsonDecode(response.body);
-    print(parsed['title']);
+    Response responsee = await get(Uri.https('worldtimeapi.org', 'api/timezone/Europe/London'));
+    print(responsee.body);
+    Map parsed = jsonDecode(responsee.body);
+    String dateTime = parsed['datetime'];
+    String offSet = parsed['utc_offset'].subString(1,3);
+    DateTime date = DateTime.parse(dateTime);
+    date = date.add(Duration(hours:int.parse(offSet)));
+    print(date);
 
     // String userName = await Future.delayed(Duration(seconds: 2), () {
   //    return "hamza";
